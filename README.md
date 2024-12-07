@@ -1,18 +1,34 @@
-# Salesforce DX Project: Next Steps
+# **TypeSchema**
 
-Now that you’ve created a Salesforce DX project, what’s next? Here are some documentation resources to get you started.
+![TypeSchema](https://img.shields.io/badge/Apex-Validator-blue?style=for-the-badge)
+![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
+![Contributions Welcome](https://img.shields.io/badge/Contributions-Welcome-orange?style=for-the-badge)
 
-## How Do You Plan to Deploy Your Changes?
+---
 
-Do you want to deploy a set of changes, or create a self-contained application? Choose a [development model](https://developer.salesforce.com/tools/vscode/en/user-guide/development-models).
+## **🚀 Overview**
 
-## Configure Your Salesforce DX Project
+**TypeSchema** is a robust library for creating type-safe validations in Salesforce using Apex.  
+With this tool, you can:  
+- **Simplify schema validation**  
+- **Ensure data integrity**  
+- **Streamline your development workflow**
 
-The `sfdx-project.json` file contains useful configuration information for your project. See [Salesforce DX Project Configuration](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_ws_config.htm) in the _Salesforce DX Developer Guide_ for details about this file.
+This library is designed to help Apex developers write cleaner, more maintainable, and error-free code for modern Salesforce applications.
 
-## Read All About It
+---
 
-- [Salesforce Extensions Documentation](https://developer.salesforce.com/tools/vscode/)
-- [Salesforce CLI Setup Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_intro.htm)
-- [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm)
-- [Salesforce CLI Command Reference](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/cli_reference.htm)
+## **✨ Features**
+- **Lightweight & Efficient**: Minimal performance overhead while delivering powerful validation capabilities.  
+- **Type-Safe Validation**: Enforce strict rules on your data structure.  
+- **Dynamic Schema Creation**: Easily define and modify validation schemas.  
+- **Easy Integration**: Seamlessly integrates into existing Salesforce Apex projects.  
+
+---
+
+## **🛠️ Installation**
+
+1. Clone the repository:  
+   ```bash
+   git clone https://github.com/nkmongit/type-schema.git
+
