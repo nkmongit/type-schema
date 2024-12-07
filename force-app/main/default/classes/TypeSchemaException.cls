@@ -3,5 +3,5 @@
  * This exception is thrown when a value does not meet the specified validation rules.
  */
 public class TypeSchemaException extends Exception {
-    // No constructor needed; the default constructor of the Exception class is sufficient
+  // No constructor needed; the default constructor of the Exception class is sufficient
 }
