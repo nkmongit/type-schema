@@ -12,18 +12,18 @@ public class DecimalTypeSchema extends TypeSchema {
         return this;
     }
 
-    public void validate(Object value) {
-        if (minimum != null && value != null) {
-            Decimal valueToCheck = (Decimal) value;
-            if (valueToCheck < minimum) {
-                throw new TypeSchemaException('Number is too small');
-            }
+    public override void validate(Object value) {
+        if (!(value instanceof Decimal)) {
+            throw new TypeSchemaException('Value is not a Decimal.');
         }
-        if(maximum != null && value != null) {
-            Decimal valueToCheck = (Decimal) value;
-            if (valueToCheck > maximum) {
-                throw new TypeSchemaException('Number is too big');
-            }
+        Decimal decimalValue = (Decimal)value;
+
+        if (minimum != null && decimalValue < minimum) {
+            throw new TypeSchemaException('Number is too small. Minimum allowed: ' + String.valueOf(minimum));
+        }
+
+        if (maximum != null && decimalValue > maximum) {
+            throw new TypeSchemaException('Number is too big. Maximum allowed: ' + String.valueOf(maximum));
         }
     }
 }

@@ -3,9 +3,15 @@ public class StringTypeSchema extends TypeSchema {
     private Integer maxLength;
     private Integer minLength;
 
-    public StringTypeSchema email(String value) {
-        return this.validateEmail(value);
-    }
+    private Boolean isEmail = false;
+    private Boolean isPhone = false;
+    private Boolean isURL = false;
+    private Boolean isIPV4 = false;
+
+    private static final Pattern emailPattern = Pattern.compile('([a-zA-Z0-9_\\-\\.]+)@((\\[a-z]{1,3}\\.[a-z]{1,3}\\.[a-z]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})');
+    private static final Pattern phonePattern = Pattern.compile('^\\+[1-9]{1}[0-9]{3,14}$');
+    private static final Pattern urlPattern = Pattern.compile('^((http|https)://)?(www\\.)?[a-zA-Z0-9:.]{1,256}\\.[a-zA-Z]{2,6}([#&?][a-zA-Z0-9&%:]*)?$');
+    private static final Pattern ipv4Pattern = Pattern.compile('^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$');
 
     public StringTypeSchema exact(Integer length) {
         this.exactLength = length;
@@ -22,97 +28,73 @@ public class StringTypeSchema extends TypeSchema {
         return this;
     }
 
-    public StringTypeSchema phone(String value) {
-        return this.validatePhone(value);
-    }
-
-    public StringTypeSchema url(String value) {
-        return this.validateURL(value);
-    }
-
-    public StringTypeSchema ipv4(String value) {
-        return this.validateIPV4(value);
-    }
-
-    private StringTypeSchema validateEmail(String value) {
-        String emailRegex = '([a-zA-Z0-9_\\-\\.]+)@((\\[a-z]{1,3}\\.[a-z]{1,3}\\.[a-z]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})';
-        Pattern emailPattern = Pattern.compile(emailRegex);
-        Matcher matcher = emailPattern.matcher(value);
-        if (!matcher.matches()) {
-            throw new TypeSchemaException('String is not a valid email address');
-        }
+    public StringTypeSchema email() {
+        this.isEmail = true;
         return this;
     }
 
-
-    private StringTypeSchema validateIPV4(String value) {
-        String ipRegex = '^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$';
-        Pattern ipPattern = Pattern.compile(ipRegex);
-        Matcher matcher = ipPattern.matcher(value);
-        if (!matcher.matches()) {
-            throw new TypeSchemaException('String is not a valid ipv4 address');
-        }
+    public StringTypeSchema phone() {
+        this.isPhone = true;
         return this;
     }
 
-    public void validateLength(String value) {
-        if (this.minLength != null && value.length() < this.minLength) {
-            throw new TypeSchemaException('String is too short');
-        }
-        if (this.maxLength != null && value.length() > this.maxLength) {
-            throw new TypeSchemaException('String is too long');
-        }
-        if(this.exactLength != null && value.length() != this.exactLength) {
-            throw new TypeSchemaException('String must be of exact length');
+    public StringTypeSchema url() {
+        this.isURL = true;
+        return this;
+    }
+
+    public StringTypeSchema ipv4() {
+        this.isIPV4 = true;
+        return this;
+    }
+
+    private void validateEmail(String value) {
+        if (!emailPattern.matcher(value).matches()) {
+            throw new TypeSchemaException('String is not a valid email address.');
         }
     }
 
-    public void validateLength(String value, String customError) {
+    private void validatePhone(String value) {
+        if (!phonePattern.matcher(value).matches()) {
+            throw new TypeSchemaException('String is not a valid phone number.');
+        }
+    }
+
+    private void validateURL(String value) {
+        if (!urlPattern.matcher(value).matches()) {
+            throw new TypeSchemaException('String is not a valid URL.');
+        }
+    }
+
+    private void validateIPV4(String value) {
+        if (!ipv4Pattern.matcher(value).matches()) {
+            throw new TypeSchemaException('String is not a valid IPv4 address.');
+        }
+    }
+
+    private void validateLength(String value) {
         if (this.minLength != null && value.length() < this.minLength) {
-            if(customError != null && customError.trim() != '' && customError.trim().length() > 0) {
-                throw new TypeSchemaException(customError);
-            }
-            else if (customError == null) {
-                throw new TypeSchemaException('String is too short');
-            }
+            throw new TypeSchemaException('String is too short.');
         }
         if (this.maxLength != null && value.length() > this.maxLength) {
-            if(customError != null && customError.trim() != '' && customError.trim().length() > 0) {
-                throw new TypeSchemaException(customError);
-            }
-            else if(customError == null) {
-                throw new TypeSchemaException('String is too long');
-            }
+            throw new TypeSchemaException('String is too long.');
         }
         if (this.exactLength != null && value.length() != this.exactLength) {
-            if(customError != null && customError.trim() != '' && customError.trim().length() > 0) {
-                throw new TypeSchemaException(customError);
-            }
-            else if(customError == null) {
-                throw new TypeSchemaException('String must be of exact length');
-            }
+            throw new TypeSchemaException('String must be of exact length.');
         }
     }
 
-    private StringTypeSchema validateURL(String value) {
-        // ! NEED TO PROVIDE GOOD REGEX FOR THIS
-        Pattern urlPattern = Pattern.compile(
-            '^((http|https)://)??(www[.])??[a-zA-Z0-9:.]{1,256}[.]{1}[a-zA-Z]{2,6}([.]{1}[a-zA-Z0-9]{2,6}){1,2}([#&?]{1}[a-zA-Z0-9&%:]{1,256})?([.]{1}[a-zA-Z0-9]{2,6}){1,2}([.]{1}[a-zA-Z]{2,6}){1,2}$'
-        );
-        Matcher matcher = urlPattern.matcher(value);
-        if (!matcher.matches()) {
-            throw new TypeSchemaException('String is not a valid URL');
+    public override void validate(Object value) {
+        if (!(value instanceof String)) {
+            throw new TypeSchemaException('Value is not a String.');
         }
-        return this;
-    }
+        String strValue = (String)value;
 
-    private StringTypeSchema validatePhone(String value) {
-        String phoneRegex = '^\\+[1-9]{1}[0-9]{3,14}$';
-        Pattern phonePattern = Pattern.compile(phoneRegex);
-        Matcher matcher = phonePattern.matcher(value);
-        if (!matcher.matches()) {
-            throw new TypeSchemaException('String is not a phone number');
-        }
-        return this;
+        validateLength(strValue);
+
+        if (isEmail) validateEmail(strValue);
+        if (isPhone) validatePhone(strValue);
+        if (isURL) validateURL(strValue);
+        if (isIPV4) validateIPV4(strValue);
     }
 }

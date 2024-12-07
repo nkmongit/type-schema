@@ -12,18 +12,19 @@ public class IntegerTypeSchema extends TypeSchema {
         return this;
     }
 
-    public void validateSize(Object value) {
-        if (minimum != null && value != null) {
-            Integer valueToCheck = (Integer) value;
-            if (valueToCheck < minimum) {
-                throw new TypeSchemaException('Number is too small');
-            }
+    public override void validate(Object value) {
+        if (value != null && !(value instanceof Integer)) {
+            throw new TypeSchemaException('Value is not an Integer');
         }
-        if(maximum != null && value != null) {
-            Integer valueToCheck = (Integer) value;
-            if (valueToCheck > maximum) {
-                throw new TypeSchemaException('Number is too big');
-            }
+
+        Integer valueToCheck = (Integer) value;
+
+        if (minimum != null && valueToCheck < minimum) {
+            throw new TypeSchemaException('Number is too small');
+        }
+
+        if (maximum != null && valueToCheck > maximum) {
+            throw new TypeSchemaException('Number is too big');
         }
     }
 }

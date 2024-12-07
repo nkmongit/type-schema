@@ -10,4 +10,8 @@ public virtual class TypeSchema {
     public static DecimalTypeSchema decimal() {
         return new DecimalTypeSchema();
     }
+
+    public virtual void validate(Object value) {
+        throw new TypeSchemaException('Validation not implemented.');
+    }
 }
