@@ -107,6 +107,15 @@ public virtual class TypeSchema {
   }
 
   /**
+   * Creates and returns a new instance of HashingUtil for hashing operations.
+   *
+   * @return A new HashingUtil object to perform hashing using different algorithms (e.g., SHA-256, MD5, etc.).
+   */
+  public static HashingUtil hasher() {
+    return new HashingUtil();
+  }
+
+  /**
    * The virtual method for validating an object based on the specific type schema.
    *
    * This method is intended to be overridden in child classes to provide specific validation logic for different types.

@@ -283,4 +283,40 @@ public class ListTypeSchema extends TypeSchema {
     }
     return result;
   }
+
+  /**
+   * Finds the mode (most frequent element) in a list.
+   *
+   * @param inputList The list to process.
+   * @return The element that appears most frequently, or null if the list is empty.
+   */
+  public Object findMode(List<Object> inputList) {
+    // Map to store the frequency of each element
+    Map<Object, Integer> frequencyMap = new Map<Object, Integer>();
+
+    // Populate the frequency map
+    for (Object item : inputList) {
+      if (frequencyMap.containsKey(item)) {
+        frequencyMap.put(item, frequencyMap.get(item) + 1); // Increment count if the item exists
+      } else {
+        frequencyMap.put(item, 1); // Initialize count to 1 if the item is seen for the first time
+      }
+    }
+
+    // Initialize variables to track the mode and max frequency
+    Object mode = null;
+    Integer maxFrequency = 0;
+
+    // Iterate through the frequency map to find the mode
+    for (Object key : frequencyMap.keySet()) {
+      Integer frequency = frequencyMap.get(key);
+      if (frequency > maxFrequency) {
+        maxFrequency = frequency;
+        mode = key;
+      }
+    }
+
+    // Return the mode (most frequent element) or null if no mode was found
+    return mode;
+  }
 }

@@ -273,6 +273,22 @@ public class StringTypeSchema extends TypeSchema {
   }
 
   /**
+   * Generates a random alphanumeric string of the specified length.
+   *
+   * @param length The length of the random string.
+   * @return A random string containing letters and digits.
+   */
+  public String generateRandomString(Integer length) {
+    final String chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    String result = '';
+    for (Integer i = 0; i < length; i++) {
+      Integer index = Math.floor(Math.random() * chars.length()).intValue();
+      result += chars.substring(index, index + 1);
+    }
+    return result;
+  }
+
+  /**
    * Validates the string based on the defined rules for length, format, and other conditions.
    *
    * @param value The string value to validate.
